@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="ja">
   <head>
-    <title>Step4</title>
+    <link rel="stylesheet" href="sample.css" />
+    <title>Step5</title>
   </head>
   <body>
     <form>
@@ -19,7 +20,17 @@
         </li>
       </ul>
     </form>
-    <div id="todo-list"></div>
+    <div id="todo-list">
+      <table>
+        <thead>
+          <tr>
+            <th>ユーザ名</th>
+            <th>タスク</th>
+          </tr>
+        </thead>
+        <tbody id="table-body"></tbody>
+      </table>
+    </div>
     <script src="sample.js"></script>
   </body>
 </html>
