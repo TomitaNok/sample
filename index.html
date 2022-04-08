@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="main.css" />
+    <title>ToDo sample</title>
+  </head>
+  <body onload="syncTasks()">
+    <div class="wrapper">
+      <header class="page-header">ToDoアプリのサンプル</header>
+      <article class="page-body">
+        <div id="todo-list">
+          <table>
+            <thead>
+              <tr>
+                <th>タスク</th>
+                <th>ユーザ名</th>
+                <th>優先度</th>
+                <th>作成日時</th>
+                <th>進捗</th>
+              </tr>
+            </thead>
+            <tbody id="table-body"></tbody>
+          </table>
+        </div>
+      </article>
+      <footer class="page-footer">
+        <form>
+          <label for="uname" class="form-label">ユーザ名</label>
+          <input type="text" class="form-control" id="uname" />
+          <label for="title" class="form-label">タイトル</label>
+          <input type="text" class="form-control" id="title" />
+          <input type="checkbox" class="form-check-input" id="completed" />
+          <label class="form-check-label" for="exampleCheck1">完了済み</label>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </footer>
+    </div>
+    <script src="api.js"></script>
+    <script src="main.js"></script>
+  </body>
+</html>

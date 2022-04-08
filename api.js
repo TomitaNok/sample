@@ -1,4 +1,3 @@
-// localhost部分をIPアドレスに変更する
 const HOST_URI = "http://localhost:2022/tasks";
 
 class APIConnecter {
