@@ -3,34 +3,33 @@ let tasksList = [];
 
 // 登録ボタンクリック時の動作
 const onClickButton = () => {
-  const tableBody = document.querySelector("#table-body");
-  const name = document.querySelector("#name");
-  const task = document.querySelector("#task");
+  const uname = document.querySelector("#name");
+  const title = document.querySelector("#task");
 
-  const tasks = {
-    uname: name.value,
-    title: task.value
+  const task = {
+    uname: uname.value,
+    title: title.value
   }
 
   // webAPIを利用してタスクをデータベースに登録
   // タスク登録後データベースと同期してテーブルを更新
-  createNewTask(tasks).then(() => syncTaskDatabase());
+  createNewTask(task).then(() => syncTaskDatabase());
 };
 
 // 変更ボタンクリック時の動作
 const onClickChangeButton = () => {
-  const name = document.querySelector("#name");
-  const task = document.querySelector("#task")
+  const uname = document.querySelector("#name");
+  const title = document.querySelector("#task")
   const taskId = document.querySelector("#task_id")
 
-  const tasks = {}
+  const task = {}
   // 入力されている情報のみtasksに格納
-  if (name.value != "") tasks.uname = name.value;
-  if (task.value != "") tasks.title = task.value;
+  if (uname.value != "") task.uname = uname.value;
+  if (title.value != "") task.title = title.value;
 
   // webAPIを利用してデータベースのタスクを更新
   // データベース更新後、データベースと同期してテーブルを更新
-  updateTask(taskId.value, tasks).then(() => syncTaskDatabase());
+  updateTask(taskId.value, task).then(() => syncTaskDatabase());
 };
 
 // 削除ボタンクリック時の動作
