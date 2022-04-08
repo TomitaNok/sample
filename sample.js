@@ -68,6 +68,14 @@ const generateAllTableData = (tableBody, queryKeys) => {
       cell.appendChild(cellText);
       row.appendChild(cell);
     });
+    row.setAttribute("id", task["_id"]);
+    row.addEventListener("click", evt => {
+      console.log(row.getAttribute("id"));
+      const taskId = document.querySelector("#task_id");
+      const deleteTaskId = document.querySelector("#delete_task_id")
+      taskId.value = row.getAttribute("id");
+      deleteTaskId.value = row.getAttribute("id");
+    });
     tableBody.appendChild(row);
   });
 };

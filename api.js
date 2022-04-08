@@ -1,5 +1,5 @@
 // localhost部分をIPアドレスに変更する
-const HOST_URI = "http://localhost:2022/tasks";
+const HOST_URI = "http://192.168.0.178:9999/tasks";
 
 class APIConnecter {
   constructor(host, method) {
