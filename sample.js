@@ -17,6 +17,15 @@ const onClickButton = () => {
   createNewTask(tasks).then(() => syncTaskDatabase());
 };
 
+// 削除ボタンクリック時の動作
+const onClickDeleteButton = () => {
+  const taskId = document.querySelector("#delete_task_id");
+
+  // 入力されたタスクIDを指定してwebAPIでデータベースからタスクを削除
+  // タスク削除後、データベースと同期してテーブルを更新
+  removeTask(taskId.value).then(() => syncTaskDatabase());
+};
+
 // 取得ボタンクリック時の動作
 const syncTaskDatabase = async () => {
   const tableBody = document.querySelector("#table-body");
