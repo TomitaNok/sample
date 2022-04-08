@@ -17,6 +17,22 @@ const onClickButton = () => {
   createNewTask(tasks).then(() => syncTaskDatabase());
 };
 
+// 変更ボタンクリック時の動作
+const onClickChangeButton = () => {
+  const name = document.querySelector("#name");
+  const task = document.querySelector("#task")
+  const taskId = document.querySelector("#task_id")
+
+  const tasks = {}
+  // 入力されている情報のみtasksに格納
+  if (name.value != "") tasks.uname = name.value;
+  if (task.value != "") tasks.title = task.value;
+
+  // webAPIを利用してデータベースのタスクを更新
+  // データベース更新後、データベースと同期してテーブルを更新
+  updateTask(taskId.value, tasks).then(() => syncTaskDatabase());
+};
+
 // 削除ボタンクリック時の動作
 const onClickDeleteButton = () => {
   const taskId = document.querySelector("#delete_task_id");
