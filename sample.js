@@ -79,5 +79,3 @@ const generateAllTableData = (tableBody, queryKeys) => {
     tableBody.appendChild(row);
   });
 };
-
-window.addEventListener("load", syncTaskDatabase());
