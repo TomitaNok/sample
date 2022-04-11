@@ -16,32 +16,7 @@ const onClickButton = () => {
   createNewTask(task).then(() => syncTaskDatabase());
 };
 
-// 変更ボタンクリック時の動作
-const onClickChangeButton = () => {
-  const uname = document.querySelector("#name");
-  const title = document.querySelector("#task")
-  const taskId = document.querySelector("#task_id")
-
-  const task = {}
-  // 入力されている情報のみtasksに格納
-  if (uname.value != "") task.uname = uname.value;
-  if (title.value != "") task.title = title.value;
-
-  // webAPIを利用してデータベースのタスクを更新
-  // データベース更新後、データベースと同期してテーブルを更新
-  updateTask(taskId.value, task).then(() => syncTaskDatabase());
-};
-
-// 削除ボタンクリック時の動作
-const onClickDeleteButton = () => {
-  const taskId = document.querySelector("#delete_task_id");
-
-  // 入力されたタスクIDを指定してwebAPIでデータベースからタスクを削除
-  // タスク削除後、データベースと同期してテーブルを更新
-  removeTask(taskId.value).then(() => syncTaskDatabase());
-};
-
-// 取得ボタンクリック時の動作
+// データベースと同期してテーブルを更新
 const syncTaskDatabase = async () => {
   const tableBody = document.querySelector("#table-body");
 
@@ -52,30 +27,75 @@ const syncTaskDatabase = async () => {
   generateAllTableData(tableBody, ["uname", "title"]);
 };
 
+// ボタンの作成
+const createButtonCell = (taskId, buttonText, func) => {
+  const buttonCell = document.createElement("td");
+  const button = document.createElement("button");
+  const buttonTextNode = document.createTextNode(buttonText)
+  button.appendChild(buttonTextNode);
+  // ボタンにイベントリスナーを追加
+  button.addEventListener("click", () => {
+    func(taskId);
+  });
+  buttonCell.appendChild(button);
+  return buttonCell
+}
+
+// タスクの編集
+const changeTask = (taskId) => {
+  const uname = document.querySelector("#name");
+  const title = document.querySelector("#task")
+  // const taskId = row.getAttribute("id");
+
+  const task = {}
+  // 入力されている情報のみtasksに格納
+  if (uname.value != "") task.uname = uname.value;
+  if (title.value != "") task.title = title.value;
+
+  // webAPIを利用してデータベースのタスクを更新
+  // データベース更新後、データベースと同期してテーブルを更新
+  updateTask(taskId, task).then(() => syncTaskDatabase());
+}
+
+// タスクの削除
+const deleteTask = (taskId) => {
+  // const taskId = row.getAttribute("id");
+  removeTask(taskId).then(() => syncTaskDatabase());
+}
+
 // 取得ボタン押下時のテーブル更新
+// tableBody: 行を追加したい<tbody>
+// queryKeys: タスクの中身でテーブルに表示したいもののkey(ex: ["uname", "title"])
 const generateAllTableData = (tableBody, queryKeys) => {
   // テーブルボディを空にする
-  tableBody.innerHTML = "";
+  tableBody.textContent = "";
 
   // webAPIで取得したtasksListの中身をすべてテーブルに追加
   tasksList.forEach((task) => {
+    // 新しく行の要素を追加
     const row = document.createElement("tr");
     queryKeys.forEach((key) => {
+      // 新しくセルの要素を追加
       const cell = document.createElement("td");
+      // セルの中身のテキストノードを作成
       const cellText = document.createTextNode(
+        // データベースから取得したタスクの中の要素をテキストとして使用
         task[key]
       );
+      // セルに作成したテキストノードを追加
       cell.appendChild(cellText);
+      // 行に作成したセルを追加
       row.appendChild(cell);
     });
-    row.setAttribute("id", task["_id"]);
-    row.addEventListener("click", evt => {
-      console.log(row.getAttribute("id"));
-      const taskId = document.querySelector("#task_id");
-      const deleteTaskId = document.querySelector("#delete_task_id")
-      taskId.value = row.getAttribute("id");
-      deleteTaskId.value = row.getAttribute("id");
-    });
+    
+    // ここからquerykeyにないものを行に追加
+    // 削除ボタンを行に追加
+    row.appendChild(createButtonCell(task["_id"], "削除", deleteTask))
+
+    // 編集ボタンを行に追加
+    row.appendChild(createButtonCell(task["_id"], "編集", changeTask))
+    
+    // 引数として与えられたtbodyの中に作成した行を追加する
     tableBody.appendChild(row);
   });
 };
