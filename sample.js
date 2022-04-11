@@ -8,8 +8,8 @@ const onClickButton = () => {
 
   const task = {
     uname: uname.value,
-    title: title.value
-  }
+    title: title.value,
+  };
 
   // webAPIを利用してタスクをデータベースに登録
   // タスク登録後データベースと同期してテーブルを更新
@@ -19,10 +19,10 @@ const onClickButton = () => {
 // 変更ボタンクリック時の動作
 const onClickChangeButton = () => {
   const uname = document.querySelector("#name");
-  const title = document.querySelector("#task")
-  const taskId = document.querySelector("#task_id")
+  const title = document.querySelector("#task");
+  const taskId = document.querySelector("#task_id");
 
-  const task = {}
+  const task = {};
   // 入力されている情報のみtasksに格納
   if (uname.value != "") task.uname = uname.value;
   if (title.value != "") task.title = title.value;
@@ -62,12 +62,30 @@ const generateAllTableData = (tableBody, queryKeys) => {
     const row = document.createElement("tr");
     queryKeys.forEach((key) => {
       const cell = document.createElement("td");
-      const cellText = document.createTextNode(
-        task[key]
-      );
+      const cellText = document.createTextNode(task[key]);
       cell.appendChild(cellText);
       row.appendChild(cell);
     });
     tableBody.appendChild(row);
+  });
+};
+
+// tasksListをsessionStorageへ書き込みページ遷移
+const transitioningPages = () => {
+  // ObjectをKey-Valueで読み書きするためにJSON文字列へ変換して書き込む
+  sessionStorage.setItem("tasks", JSON.stringify(tasksList));
+
+  // another.htmlへ遷移
+  window.location.href = "another.html";
+};
+
+// sessionStorageから値を読み込みコンソールに出力
+const loadFromStorage = () => {
+  // JSON文字列として記録されているので、読み込んでからObjectに変換
+  const tasks = JSON.parse(sessionStorage.getItem("tasks"));
+
+  // consoleに出力
+  tasks.forEach((task) => {
+    console.log(task);
   });
 };

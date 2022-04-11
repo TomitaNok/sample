@@ -2,9 +2,9 @@
 <html lang="ja">
   <head>
     <link rel="stylesheet" href="sample.css" />
-    <title>Step6</title>
+    <title>Sample</title>
   </head>
-  <body>
+  <body onload="syncTaskDatabase()">
     <form>
       <ul>
         <li>
@@ -30,7 +30,6 @@
       <input type="text" id="delete_task_id" name="delete_task_id" />
       <button type="button" onclick="onClickDeleteButton()">削除</button>
     </form>
-    <button type="button" onclick="syncTaskDatabase()">取得</button>
     <div id="todo-list">
       <table>
         <thead>
@@ -49,6 +48,9 @@
       aria-label="Follow @your-github-name on GitHub"
       >Follow @your-github-name</a
     >
+
+    <button type="button" onclick="transitioningPages()">別ページへ</button>
+
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <script src="api.js"></script>
